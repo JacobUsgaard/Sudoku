@@ -49,114 +49,14 @@ def check_square(board, x_range, y_range):
 				p.remove(val)
 			else:
 				return False
+	return True
 
 def check_squares(board):
-	# top left
-	p = list(pos)
-	for x in range(0,3):
-		for y in range(0,3):
-			val = board[x][y]
-			if val == 0:
-				continue
-			elif val in p:
-				p.remove(val)
-			else:
-				return False
+	ranges = [range(0,3), range(3,6), range(6,9)]
 
-	# top mid
-	p = list(pos)
-	for x in range(0,3):
-		for y in range(3,6):
-			val = board[x][y]
-			if val == 0:
-				continue
-			elif val in p:
-				p.remove(val)
-			else:
-				return False
-
-	# top right
-	p = list(pos)
-	for x in range(0,3):
-		for y in range(6,9):
-			val = board[x][y]
-			if val == 0:
-				continue
-			elif val in p:
-				p.remove(val)
-			else:
-				return False
-
-	# mid left
-	p = list(pos)
-	for x in range(3,6):
-		for y in range(0,3):
-			val = board[x][y]
-			if val == 0:
-				continue
-			elif val in p:
-				p.remove(val)
-			else:
-				return False
-	
-	# mid mid
-	p = list(pos)
-	for x in range(3,6):
-		for y in range(3,6):
-			val = board[x][y]
-			if val == 0:
-				continue
-			elif val in p:
-				p.remove(val)
-			else:
-				return False
-
-	# mid right
-	p = list(pos)
-	for x in range(3,6):
-		for y in range(6,9):
-			val = board[x][y]
-			if val == 0:
-				continue
-			elif val in p:
-				p.remove(val)
-			else:
-				return False
-
-	# bot left
-	p = list(pos)
-	for x in range(6,9):
-		for y in range(0,3):
-			val = board[x][y]
-			if val == 0:
-				continue
-			elif val in p:
-				p.remove(val)
-			else:
-				return False
-
-	# bot mid
-	p = list(pos)
-	for x in range(6,9):
-		for y in range(3,6):
-			val = board[x][y]
-			if val == 0:
-				continue
-			elif val in p:
-				p.remove(val)
-			else:
-				return False
-	
-	# bot right
-	p = list(pos)
-	for x in range(6,9):
-		for y in range(6,9):
-			val = board[x][y]
-			if val == 0:
-				continue
-			elif val in p:
-				p.remove(val)
-			else:
+	for x in ranges:
+		for y in ranges:
+			if not check_square(board,x,y):
 				return False
 
 	return True
@@ -210,4 +110,3 @@ def print_board(board):
 		else:
 			print()
 play(m_board)
-#print(check_board(m_board))
