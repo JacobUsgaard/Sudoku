@@ -47,7 +47,7 @@ def check_square(board, x_range, y_range):
 				continue
 			elif val in p:
 				p.remove(val)
-			else
+			else:
 				return False
 
 def check_squares(board):
