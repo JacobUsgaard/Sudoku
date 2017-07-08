@@ -14,7 +14,6 @@ m_board = [
 ]
 
 boards = 0
-
 pos = [x+1 for x in range(9)]
 board_length = range(len(m_board))
 
@@ -73,12 +72,12 @@ def check_squares(board):
 
 	return True
 
-def check_board(board):
+def is_good(board):
 	# check to make sure the board complies with Sudoku rules
 	return check_rows(board) and check_cols(board) and check_squares(board)
 
 def is_done(board):
-	#check that all board spots are filled with non-zero
+	# check that all board spots are filled with non-zero
 	for x in board_length:
 		for y in board_length:
 			val = board[x][y]
@@ -88,14 +87,15 @@ def is_done(board):
 
 def play(board):
 	global boards
-	good = check_board(board)
-	if not good:
+
+	if not is_good(board):
 		return
+
 	elif is_done(board):
-		print("Done!")
 		print("Boards: " + str(boards))
 		print_board(board)
-		sys.exit()
+		return
+
 	for x in board_length:
 		for y in board_length:
 			if board[x][y] != 0:
