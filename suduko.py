@@ -1,4 +1,3 @@
-import sys
 import copy
 
 m_board = [
