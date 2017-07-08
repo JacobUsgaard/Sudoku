@@ -35,7 +35,7 @@ def check_rows(board):
 
 def check_cols(board):
 	# for each col
-	# check that the col has only one of the possibilities
+	# 	check that the col has only one of the possibilities
 	for x in board_length:
 		p = list(pos)
 		for y in board_length:
@@ -49,6 +49,7 @@ def check_cols(board):
 	return True
 
 def check_square(board, x_range, y_range):
+	# check to make sure that this square has only one of the possibilties
 	p = list(pos)
 	for x in x_range:
 		for y in y_range:
@@ -62,6 +63,7 @@ def check_square(board, x_range, y_range):
 	return True
 
 def check_squares(board):
+	# check all mini squares
 	ranges = [range(0,3), range(3,6), range(6,9)]
 
 	for x in ranges:
@@ -72,6 +74,7 @@ def check_squares(board):
 	return True
 
 def check_board(board):
+	# check to make sure the board complies with Sudoku rules
 	return check_rows(board) and check_cols(board) and check_squares(board)
 
 def is_done(board):
