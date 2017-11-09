@@ -1,27 +1,22 @@
 import copy
+import sys
+import re
 
-m_board = [
-[3,2,7,0,0,0,0,8,0],
-[6,0,0,3,0,0,0,9,0],
-[0,0,0,2,0,1,6,0,0],
-[0,9,1,0,3,0,0,0,6],
-[0,0,0,8,0,2,0,0,0],
-[4,0,0,0,1,0,3,7,0],
-[0,0,4,9,0,6,0,0,0],
-[0,6,0,0,0,3,0,0,8],
-[0,7,0,0,0,0,5,6,9]
-]
+board_length = 9
+m_board = [0] * board_length
+for i in range(board_length):
+	m_board[i] = [0] * board_length
 
 boards = 0
-pos = [x+1 for x in range(9)]
-board_length = range(len(m_board))
+pos = [x+1 for x in range(board_length)]
+board_range = range(board_length)
 
 def check_rows(board):
 	# for each row
 	#	check that the row has only one of the possibilities
-	for x in board_length:
+	for x in board_range:
 		p = list(pos)
-		for y in board_length:
+		for y in board_range:
 			val = board[x][y]
 			if val == 0:
 				continue
@@ -34,9 +29,9 @@ def check_rows(board):
 def check_cols(board):
 	# for each col
 	# 	check that the col has only one of the possibilities
-	for x in board_length:
+	for x in board_range:
 		p = list(pos)
-		for y in board_length:
+		for y in board_range:
 			val = board[y][x]
 			if val == 0:
 				continue
@@ -77,8 +72,8 @@ def is_good(board):
 
 def is_done(board):
 	# check that all board spots are filled with non-zero
-	for x in board_length:
-		for y in board_length:
+	for x in board_range:
+		for y in board_range:
 			val = board[x][y]
 			if val == 0:
 				return False
@@ -95,8 +90,8 @@ def play(board):
 		print_board(board)
 		return
 
-	for x in board_length:
-		for y in board_length:
+	for x in board_range:
+		for y in board_range:
 			if board[x][y] != 0:
 				continue
 			else:
@@ -109,10 +104,10 @@ def play(board):
 
 def print_board(board):
 	print("|----------------------|")
-	for x in board_length:
+	for x in board_range:
 		print("|", end="")
 
-		for y in board_length:
+		for y in board_range:
 			print(str(board[x][y]) + " ", end="")
 			if (y + 1) % 3 == 0:
 				print("| ", end="")
@@ -121,5 +116,52 @@ def print_board(board):
 			print("|----------------------|")
 		else:
 			print()
+def show_help():
+	print("usage:")
+	print("sudoku.py file file_name")
+	print("sudoku.py string input_string")
+	sys.exit()
+
+def into_board(string, board):
+
+	pattern = re.compile("\D")
+	m_string = pattern.sub("", string)
+
+	expected = board_length * board_length;
+	actual = len(m_string)
+
+	if(expected != actual):
+		print("incorrect number of lines")
+		print("expected: " + str(expected));
+		print("actual: " + str(actual));
+		sys.exit()
+
+	for row in board_range:
+		for col in board_range:
+			board[row][col] = int(m_string[board_length * row + col])
+
+if(len(sys.argv) != 3):
+	show_help()
+
+input_type=sys.argv[1]
+input_string=sys.argv[2]
+all_lines = ""
+
+if(input_type == "file"):
+	try:
+		with open(input_string, 'r') as input_file:
+			all_lines = input_file.read()
+	except Exception as exception:
+		print("failed to read file")
+		print(exception)
+		sys.exit()
+
+elif(input_type == "string"):
+	all_lines = input_string
+else:
+	show_help()
+
+into_board(all_lines, m_board)
+
 print_board(m_board)
 play(m_board)
