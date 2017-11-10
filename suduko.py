@@ -2,14 +2,6 @@ import copy
 import sys
 import re
 
-board_length = 9
-m_board = [0] * board_length
-for i in range(board_length):
-	m_board[i] = [0] * board_length
-
-boards = 0
-pos = [x+1 for x in range(board_length)]
-board_range = range(board_length)
 
 def check_rows(board):
 	# for each row
@@ -118,8 +110,11 @@ def print_board(board):
 			print()
 def show_help():
 	print("usage:")
-	print("sudoku.py file file_name")
-	print("sudoku.py string input_string")
+	print("\tsudoku.py input_type input_string [board_size]")
+	print("")
+	print("\tinput_type:")
+	print("\t\tstring input_string")
+	print("\t\tfile file_name")
 	sys.exit()
 
 def into_board(string, board):
@@ -140,11 +135,16 @@ def into_board(string, board):
 		for col in board_range:
 			board[row][col] = int(m_string[board_length * row + col])
 
-if(len(sys.argv) != 3):
+if(len(sys.argv) < 3):
 	show_help()
 
-input_type=sys.argv[1]
-input_string=sys.argv[2]
+input_type = sys.argv[1]
+input_string = sys.argv[2]
+
+input_board_length = None
+
+if(len(sys.argv) > 3):
+	input_board_length = sys.argv[3]
 all_lines = ""
 
 if(input_type == "file"):
@@ -160,6 +160,24 @@ elif(input_type == "string"):
 	all_lines = input_string
 else:
 	show_help()
+
+if(input_board_length is not None):
+	try:
+		board_length = int(input_board_length)
+	except ValueError as valueError:
+		print("invalid number: " + str(input_board_length))
+		sys.exit()
+else:
+	board_length = 9
+
+m_board = [0] * board_length
+for i in range(board_length):
+	m_board[i] = [0] * board_length
+
+boards = 0
+pos = [x+1 for x in range(board_length)]
+board_range = range(board_length)
+
 
 into_board(all_lines, m_board)
 
