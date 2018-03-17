@@ -66,8 +66,7 @@ def is_done(board):
 	# check that all board spots are filled with non-zero
 	for x in board_range:
 		for y in board_range:
-			val = board[x][y]
-			if val == 0:
+			if board[x][y] == 0:
 				return False
 	return True
 
@@ -110,15 +109,10 @@ def print_board(board):
 			print()
 def show_help():
 	print("usage:")
-	print("\tsudoku.py input_type input_string [board_size]")
-	print("")
-	print("\tinput_type:")
-	print("\t\tstring input_string")
-	print("\t\tfile file_name")
+	print("\tsudoku.py -file <file_name>|-string <input_string> [<board_size>]")
 	sys.exit()
 
 def into_board(string, board):
-
 	pattern = re.compile("\D")
 	m_string = pattern.sub("", string)
 
@@ -147,7 +141,7 @@ if(len(sys.argv) > 3):
 	input_board_length = sys.argv[3]
 all_lines = ""
 
-if(input_type == "file"):
+if(input_type == "-file"):
 	try:
 		with open(input_string, 'r') as input_file:
 			all_lines = input_file.read()
@@ -156,7 +150,7 @@ if(input_type == "file"):
 		print(exception)
 		sys.exit()
 
-elif(input_type == "string"):
+elif(input_type == "-string"):
 	all_lines = input_string
 else:
 	show_help()
