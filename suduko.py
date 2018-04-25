@@ -2,7 +2,6 @@ import copy
 import sys
 import re
 
-
 def check_rows(board):
 	# for each row
 	#	check that the row has only one of the possibilities
@@ -102,11 +101,10 @@ def print_board(board):
 			print(str(board[x][y]) + " ", end="")
 			if (y + 1) % 3 == 0:
 				print("| ", end="")
+		print()
 		if (x + 1) % 3 == 0:
-			print()
 			print("|----------------------|")
-		else:
-			print()
+
 def show_help():
 	print("usage:")
 	print("\tsudoku.py -file <file_name>|-string <input_string> [<board_size>]")
@@ -171,7 +169,6 @@ for i in range(board_length):
 boards = 0
 pos = [x+1 for x in range(board_length)]
 board_range = range(board_length)
-
 
 into_board(all_lines, m_board)
 
